@@ -203,5 +203,5 @@ var displayLaunchSiteLinks = function (obj) {
   launchSitesEl.appendChild(launchSiteCard);
 };
 
-launchSitesData();
-nextLaunchData();
+// launchSitesData();
+// nextLaunchData();
