@@ -97,7 +97,8 @@ var displayNextLaunch = function (data) {
       upcomingEl.appendChild(launchpadEl);
       var imgEl = document.createElement("img");
       imgEl.setAttribute("src", launchSiteImg);
-      imgEl.setAttribute("style", "height:30%; width:30%; border-radius:4px;");
+      // style settings are temporary
+      imgEl.setAttribute("style", "width:40%; border-radius:4px;");
       upcomingEl.appendChild(imgEl);
     });
   });
@@ -174,7 +175,9 @@ var launchSitesData = function () {
 var displayLaunchSiteLinks = function (obj) {
 
   var launchSiteCard = document.createElement("div");
-  launchSiteCard.setAttribute(
+  // to set class for Bulma styling
+  // launchSiteCar.className = "";
+    launchSiteCard.setAttribute(
     "style",
     "border:1px solid blue; text-align:center; width:45vw;"
   );
@@ -188,10 +191,9 @@ var displayLaunchSiteLinks = function (obj) {
   launchSiteCard.appendChild(locationEl);
 
   var imageLinkEl = document.createElement("a");
-//   imageLinkEl.setAttribute("href", obj.link);
-//   imageLinkEl.setAttribute("target", "_blank");
+  // these style settings are temporary
   imageLinkEl.innerHTML =
-    "<img src='" + obj.img + "' style='height:50%; width:75%; border-radius:4px;' />";
+    "<img src='" + obj.img + "' style='width:75%; border-radius:4px;' />";
   launchSiteCard.appendChild(imageLinkEl);
 
   var coordinatesEl = document.createElement("p");
@@ -203,9 +205,3 @@ var displayLaunchSiteLinks = function (obj) {
 
 launchSitesData();
 nextLaunchData();
-
-// fetch("https://api.spacexdata.com/v4/crew/[id string]").then(function(response) {
-//     response.json().then(function(data) {
-//         console.log(data); 
-//     })
-// })
