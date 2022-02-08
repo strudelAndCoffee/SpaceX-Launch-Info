@@ -45,10 +45,6 @@ var displayNextLaunch = function (data) {
   var launchInfoEl = document.createElement("h2");
   launchInfoEl.textContent = "Next Launch:";
   upcomingEl.appendChild(launchInfoEl);
-  var redditEl = document.createElement("a");
-  redditEl.setAttribute("href", reddit);
-  redditEl.textContent = "Mission discussion (reddit)";
-  upcomingEl.appendChild(redditEl);
   var dateEl = document.createElement("p");
   dateEl.innerHTML = "<strong>Launch date:</strong> " + date;
   upcomingEl.appendChild(dateEl);
@@ -85,6 +81,10 @@ var displayNextLaunch = function (data) {
       var payloadEl = document.createElement("p");
       payloadEl.innerHTML = "<strong>Payload:</strong> " + payload;
       upcomingEl.appendChild(payloadEl);
+      var redditEl = document.createElement("a");
+    redditEl.setAttribute("href", reddit);
+    redditEl.textContent = "Mission discussion (reddit)";
+    upcomingEl.appendChild(redditEl);
     });
   });
 
@@ -97,7 +97,7 @@ var displayNextLaunch = function (data) {
       upcomingEl.appendChild(launchpadEl);
       var imgEl = document.createElement("img");
       imgEl.setAttribute("src", launchSiteImg);
-      imgEl.setAttribute("style", "height:30%; width:30%;");
+      imgEl.setAttribute("style", "height:30%; width:30%; border-radius:4px;");
       upcomingEl.appendChild(imgEl);
     });
   });
@@ -117,7 +117,7 @@ var launchSitesData = function () {
           img: data[1].images.large[0],
           loc: data[1].region,
           lat: data[1].latitude,
-          lon: data[1].longitiude,
+          lon: data[1].longitude,
           link: "./capeCanaveral.html"
         }
         launchSitesArr.push(linkObj1);
@@ -130,7 +130,7 @@ var launchSitesData = function () {
           img: data[5].images.large[0],
           loc: data[5].region,
           lat: data[5].latitude,
-          lon: data[5].longitiude,
+          lon: data[5].longitude,
           link: "./kennedy.html"
         }
         launchSitesArr.push(linkObj5);
@@ -143,7 +143,7 @@ var launchSitesData = function () {
           img: data[4].images.large[0],
           loc: data[4].region,
           lat: data[4].latitude,
-          lon: data[4].longitiude,
+          lon: data[4].longitude,
           link: "./vandenberg.html"
         }
         launchSitesArr.push(linkObj4);
@@ -156,7 +156,7 @@ var launchSitesData = function () {
           img: data[2].images.large[0],
           loc: data[2].region,
           lat: data[2].latitude,
-          lon: data[2].longitiude,
+          lon: data[2].longitude,
           link: "./southTexas.html"
         }
         launchSitesArr.push(linkObj2);
@@ -176,7 +176,7 @@ var displayLaunchSiteLinks = function (obj) {
   var launchSiteCard = document.createElement("div");
   launchSiteCard.setAttribute(
     "style",
-    "border:1px solid black; text-align:center; flex: 1 20%;"
+    "border:1px solid blue; text-align:center; width:45vw;"
   );
 
   var nameEl = document.createElement("h2");
@@ -188,11 +188,15 @@ var displayLaunchSiteLinks = function (obj) {
   launchSiteCard.appendChild(locationEl);
 
   var imageLinkEl = document.createElement("a");
-  imageLinkEl.setAttribute("href", obj.link);
-  imageLinkEl.setAttribute("target", "_blank");
+//   imageLinkEl.setAttribute("href", obj.link);
+//   imageLinkEl.setAttribute("target", "_blank");
   imageLinkEl.innerHTML =
-    "<img src='" + obj.img + "' style='height:50%; width:75%;' />";
+    "<img src='" + obj.img + "' style='height:50%; width:75%; border-radius:4px;' />";
   launchSiteCard.appendChild(imageLinkEl);
+
+  var coordinatesEl = document.createElement("p");
+  coordinatesEl.innerHTML = "Latitude: " + obj.lat + "<br />" + "Longitude: " + obj.lon;
+  launchSiteCard.appendChild(coordinatesEl);
 
   launchSitesEl.appendChild(launchSiteCard);
 };
