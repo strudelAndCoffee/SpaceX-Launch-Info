@@ -2,9 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: white;
 }
 
-/* body {
+body {
     background-image: url("../img/space2.jpg");
     width: 100%;
     background-position: center;
@@ -13,7 +14,7 @@
     position: relative;
     z-index: -1;
     text-align: center;
-} */
+}
 
 h1 {
     padding: 15px 30px;
