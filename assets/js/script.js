@@ -43,16 +43,17 @@ var displayNextLaunch = function (data) {
   }
 
   var launchInfoEl = document.createElement("h2");
+  launchInfoEl.setAttribute("style", "color:blue;");
   launchInfoEl.textContent = "Next Launch:";
   upcomingEl.appendChild(launchInfoEl);
   var dateEl = document.createElement("p");
-  dateEl.innerHTML = "<strong>Launch date:</strong> " + date;
+  dateEl.innerHTML = "<strong style='color:blue;'>Launch date:</strong> " + date;
   upcomingEl.appendChild(dateEl);
   var flightEl = document.createElement("p");
-  flightEl.innerHTML = "<strong>Flight number:</strong> " + flight;
+  flightEl.innerHTML = "<strong style='color:blue;'>Flight number:</strong> " + flight;
   upcomingEl.appendChild(flightEl);
   var crewEl = document.createElement("p");
-  crewEl.innerHTML = "<strong>Crew members:</strong> " + crew;
+  crewEl.innerHTML = "<strong style='color:blue;'>Crew members:</strong> " + crew;
   upcomingEl.appendChild(crewEl);
 
   var launchpadId = data.launchpad;
@@ -79,7 +80,7 @@ var displayNextLaunch = function (data) {
       var payload = payloadData.name;
 
       var payloadEl = document.createElement("p");
-      payloadEl.innerHTML = "<strong>Payload:</strong> " + payload;
+      payloadEl.innerHTML = "<strong style='color:blue;'>Payload:</strong> " + payload;
       upcomingEl.appendChild(payloadEl);
       var redditEl = document.createElement("a");
     redditEl.setAttribute("href", reddit);
@@ -93,12 +94,12 @@ var displayNextLaunch = function (data) {
       var launchpad = launchpadData.full_name;
 
       var launchpadEl = document.createElement("p");
-      launchpadEl.innerHTML = "<strong>Launch site: </strong><a href='" + launchSiteLink + "' target='_blank'>" + launchpad + "</a>";
+      launchpadEl.innerHTML = "<strong style='color:blue;'>Launch site: </strong><a href='" + launchSiteLink + "' target='_blank'>" + launchpad + "</a>";
       upcomingEl.appendChild(launchpadEl);
       var imgEl = document.createElement("img");
       imgEl.setAttribute("src", launchSiteImg);
       // style settings are temporary
-      imgEl.setAttribute("style", "width:40%; border-radius:4px;");
+      imgEl.setAttribute("style", "width:40%; border:1px solid blue; border-radius:4px;");
       upcomingEl.appendChild(imgEl);
     });
   });
@@ -203,5 +204,5 @@ var displayLaunchSiteLinks = function (obj) {
   launchSitesEl.appendChild(launchSiteCard);
 };
 
-// launchSitesData();
-// nextLaunchData();
+launchSitesData();
+nextLaunchData();
