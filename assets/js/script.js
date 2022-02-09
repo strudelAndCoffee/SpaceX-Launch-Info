@@ -1,9 +1,10 @@
+
 var upcomingEl = document.querySelector("#upcoming");
 var launchSitesEl = document.querySelector("#launch-sites");
 
 var launchSitesArr = [];
 
-var nextLaunchData = function () {
+function nextLaunchData(){
   fetch("https://api.spacexdata.com/v4/launches/upcoming").then(function (response) {
 
     if (response.ok) {
@@ -28,7 +29,7 @@ var nextLaunchData = function () {
   });
 };
 
-var displayNextLaunch = function (data) {
+function displayNextLaunch(data) {
   var date = data.date_local;
   var flight = data.flight_number;
   var reddit = data.links.reddit.campaign;
@@ -97,14 +98,14 @@ var displayNextLaunch = function (data) {
       upcomingEl.appendChild(launchpadEl);
       var imgEl = document.createElement("img");
       imgEl.setAttribute("src", launchSiteImg);
-      // style settings are temporary
-      imgEl.setAttribute("style", "width:40%; border-radius:4px;");
+      imgEl.setAttribute("style", "height:30%; width:30%; border-radius:4px;");
       upcomingEl.appendChild(imgEl);
     });
   });
 };
 
-var launchSitesData = function () {
+
+function launchSitesData() {
   fetch("https://api.spacexdata.com/v4/launchpads").then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
@@ -172,12 +173,46 @@ var launchSitesData = function () {
   });
 };
 
-var displayLaunchSiteLinks = function (obj) {
+async function  getWeatherData(lon, lat) {
+
+  // need to chain api calls in order to get weather png
+  const response1 = await fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ String(lat) + "&lon="+ String(lon) + "&appid=35ba749d4db4fe6cbb94fc8036fea775");
+  const data1 = await response1.json();
+  const response2 = await fetch("http://api.weatherapi.com/v1/current.json?key=baafdcc671a24961b5e201219220102&q="+ data1.name + "&aqi=no");
+  const data2 = await response2.json();
+  return data2
+}
+
+
+  
+function displayLaunchSiteLinks (obj) {
+
+  var weatherCard = document.createElement("div");
+  var tempEL = document.createElement("h2"); 
+  var cityNameEL = document.createElement("h2"); 
+  var imageEL=document.createElement("img")
+
+  
+  getWeatherData(obj.lon, obj.lat).then(weatherData => {
+    console.log(weatherData)
+
+    tempEL.textContent= weatherData.current.temp_f+" °F";
+    cityNameEL.textContent = weatherData.location.name;
+    imageEL.src= "https:"+weatherData.current.condition.icon
+
+
+  
+    weatherCard.appendChild(cityNameEL);
+    weatherCard.appendChild(tempEL);
+    weatherCard.appendChild(imageEL)
+
+
+  });
+
+
 
   var launchSiteCard = document.createElement("div");
-  // to set class for Bulma styling
-  // launchSiteCar.className = "";
-    launchSiteCard.setAttribute(
+  launchSiteCard.setAttribute(
     "style",
     "border:1px solid blue; text-align:center; width:45vw;"
   );
@@ -191,17 +226,24 @@ var displayLaunchSiteLinks = function (obj) {
   launchSiteCard.appendChild(locationEl);
 
   var imageLinkEl = document.createElement("a");
-  // these style settings are temporary
+//   imageLinkEl.setAttribute("href", obj.link);
+//   imageLinkEl.setAttribute("target", "_blank");
   imageLinkEl.innerHTML =
-    "<img src='" + obj.img + "' style='width:75%; border-radius:4px;' />";
+    "<img src='" + obj.img + "' style='height:50%; width:75%; border-radius:4px;' />";
   launchSiteCard.appendChild(imageLinkEl);
 
   var coordinatesEl = document.createElement("p");
   coordinatesEl.innerHTML = "Latitude: " + obj.lat + "<br />" + "Longitude: " + obj.lon;
   launchSiteCard.appendChild(coordinatesEl);
-
+  launchSiteCard.appendChild(weatherCard);
+  
   launchSitesEl.appendChild(launchSiteCard);
 };
+nextLaunchData();
+launchSitesData();
 
-// launchSitesData();
-// nextLaunchData();
+// // fetch("https://api.spacexdata.com/v4/crew/[id string]").then(function(response) {
+// //     response.json().then(function(data) {
+// //         console.log(data); 
+// //     })
+// // })
