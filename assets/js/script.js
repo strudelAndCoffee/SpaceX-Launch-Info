@@ -82,52 +82,27 @@ var displayNextLaunch = function (data) {
       payloadEl.innerHTML = "<strong style='color:blue;'>Payload:</strong> " + payload;
       upcomingEl.appendChild(payloadEl);
       var redditEl = document.createElement("a");
-    redditEl.setAttribute("href", reddit);
-    redditEl.textContent = "Mission discussion (reddit)";
-    upcomingEl.appendChild(redditEl);
-    });
-  });
+      redditEl.setAttribute("href", reddit);
+      redditEl.setAttribute("target", "_blank");
+      redditEl.textContent = "Mission discussion (reddit)";
+      upcomingEl.appendChild(redditEl);
 
-  fetch(launchpadUrl).then(function (response) {
-    response.json().then(function (launchpadData) {
-
-      console.log(launchpadData);
-
-      var launchpad = launchpadData.full_name;
-      var lat = launchpadData.latitude;
-      var lon = launchpadData.longitude;
-
-      var launchpadEl = document.createElement("p");
-      launchpadEl.innerHTML = "<strong style='color:blue;'>Launch site: </strong><a href='" + launchSiteLink + "' target='_blank'>" + launchpad + "</a>";
-      upcomingEl.appendChild(launchpadEl);
-      var imgEl = document.createElement("img");
-      imgEl.setAttribute("src", launchSiteImg);
-      // style settings are temporary
-      imgEl.setAttribute("style", "width:40%; border:1px solid blue; border-radius:4px;");
-      upcomingEl.appendChild(imgEl);
-
-      // weather info
-      fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=13ddc6bf74170f310b01600989915eea")
-      .then(function(response) {
-        response.json()
-        .then(function(data) {
-          console.log(data);
-
-          var temp = data.current.temp + "°F";
-          var uvi = data.current.uvi;
-          var vis = data.current.visibility + " meters";
-          var iconUrl = "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
-
-          var weatherEl = document.createElement("div");
-          weatherEl.setAttribute("style", "background-color:black; width:300px;");
-          var textData = document.createElement("div");
-          textData.innerHTML = "<h3 style='padding-bottom:10px;'>Current Weather at Location</h3><p><strong style='color:blue;'>Temperature: </strong>" + temp + "<br /><strong style='color:blue;'>UV Index: </strong>" + uvi + "<br /><strong style='color:blue;'>Visibility: </strong>" + vis;
-          weatherEl.appendChild(textData);
-          var imgEl = document.createElement("div");
-          imgEl.innerHTML = "<img src='" + iconUrl + "' />";
-          weatherEl.appendChild(imgEl);
-          upcomingEl.appendChild(weatherEl);
-        })
+      fetch(launchpadUrl).then(function (response) {
+        response.json().then(function (launchpadData) {
+    
+          var launchpad = launchpadData.full_name;
+          // var lat = launchpadData.latitude;
+          // var lon = launchpadData.longitude;
+    
+          var launchpadEl = document.createElement("p");
+          launchpadEl.innerHTML = "<p><a href='#" + launchSiteLink + "' style='text-decoration:none;'><strong style='color:blue;'>Launch site: </strong>" + launchpad + "</p>";
+          upcomingEl.appendChild(launchpadEl);
+          var imgEl = document.createElement("img");
+          imgEl.setAttribute("src", launchSiteImg);
+          // style settings are temporary
+          imgEl.setAttribute("style", "width:40%; border:1px solid blue; border-radius:4px;");
+          upcomingEl.appendChild(imgEl);
+        });
       });
     });
   });
@@ -137,8 +112,6 @@ var launchSitesData = function () {
   fetch("https://api.spacexdata.com/v4/launchpads").then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
-
-        console.log(data);
 
         // Cape Canaveral Space Force Station Space Launch Complex 40 info
         var linkObj1 = {
@@ -206,19 +179,17 @@ var displayLaunchSiteLinks = function (obj) {
   var launchSiteCard = document.createElement("div");
   // to set class for Bulma styling
   // launchSiteCar.className = "";
-    launchSiteCard.setAttribute(
-    "style",
-    "border:1px solid blue; text-align:center; width:45vw;"
-  );
+  launchSiteCard.setAttribute("id", obj.link);
+  launchSiteCard.setAttribute("style", "border:1px solid blue; text-align:center; width:45vw;");
+
+  var locationEl = document.createElement("h2");
+  locationEl.setAttribute("style", "color:blue;");
+  locationEl.textContent = obj.loc;
+  launchSiteCard.appendChild(locationEl);
 
   var nameEl = document.createElement("h2");
   nameEl.textContent = obj.name;
   launchSiteCard.appendChild(nameEl);
-
-  var locationEl = document.createElement("h3");
-  locationEl.setAttribute("style", "color:blue;");
-  locationEl.textContent = obj.loc;
-  launchSiteCard.appendChild(locationEl);
 
   var imageLinkEl = document.createElement("a");
   // these style settings are temporary
@@ -226,35 +197,47 @@ var displayLaunchSiteLinks = function (obj) {
     "<img src='" + obj.img + "' style='width:75%; border-radius:4px;' />";
   launchSiteCard.appendChild(imageLinkEl);
 
-  var coordinatesEl = document.createElement("p");
-  coordinatesEl.innerHTML = "Latitude: " + obj.lat + "<br />" + "Longitude: " + obj.lon;
-  launchSiteCard.appendChild(coordinatesEl);
+  // var coordinatesEl = document.createElement("p");
+  // coordinatesEl.innerHTML = "Latitude: " + obj.lat + "<br />" + "Longitude: " + obj.lon;
+  // launchSiteCard.appendChild(coordinatesEl);
 
+  // weather info
+  var weatherCard = document.createElement("div");
+  var tempEL = document.createElement("h2"); 
+  var cityNameEL = document.createElement("h2"); 
+  var imageEL=document.createElement("img")
+
+  
+  getWeatherData(obj.lon, obj.lat).then(weatherData => {
+    console.log(weatherData)
+
+    tempEL.textContent= weatherData.current.temp_f+" °F";
+    cityNameEL.textContent = weatherData.location.name;
+    imageEL.src= "https:"+weatherData.current.condition.icon
+
+
+  
+    weatherCard.appendChild(cityNameEL);
+    weatherCard.appendChild(tempEL);
+    weatherCard.appendChild(imageEL)
+
+
+  });
+
+  launchSiteCard.appendChild(weatherCard);
   launchSitesEl.appendChild(launchSiteCard);
 };
 
-// fetch(apiUrl)
-//     .then(function(response) {
-//         if (response.ok) {
-//             response.json()
-//             .then(function(data) {
+// weather function
+async function  getWeatherData(lon, lat) {
 
-//                 if (!data[0]) {
-//                     alert("City name not recognized. Please try again");
-//                 } else {
-//                     var city = data[0].name;
-//                     var lat = data[0].lat;
-//                     var lon = data[0].lon;
-//                     var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&";
-//                     displayCityWeather(city, url);
-//                     saveCity(city, url);
-//                 }
-//             })
-//         } else {
-//             alert("Cannot complete request at this time.");
-//         }
-//     });
-
+  // need to chain api calls in order to get weather png
+  const response1 = await fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ String(lat) + "&lon="+ String(lon) + "&appid=35ba749d4db4fe6cbb94fc8036fea775");
+  const data1 = await response1.json();
+  const response2 = await fetch("http://api.weatherapi.com/v1/current.json?key=baafdcc671a24961b5e201219220102&q="+ data1.name + "&aqi=no");
+  const data2 = await response2.json();
+  return data2
+}
 
 launchSitesData();
 nextLaunchData();

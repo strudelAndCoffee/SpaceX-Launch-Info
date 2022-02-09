@@ -127,3 +127,28 @@ fetch("url").then(function(response) {
 //         console.log(data[2].images.large[0]);
 //     })
 // });
+
+
+// weather info
+// fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=13ddc6bf74170f310b01600989915eea")
+// .then(function(response) {
+//   response.json()
+//   .then(function(data) {
+//     console.log(data);
+
+//     var temp = data.current.temp + "°F";
+//     var uvi = data.current.uvi;
+//     var vis = data.current.visibility + " meters";
+//     var iconUrl = "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
+
+//     var weatherEl = document.createElement("div");
+//     weatherEl.setAttribute("style", "background-color:black; width:300px;");
+//     var textData = document.createElement("div");
+//     textData.innerHTML = "<h3 style='padding-bottom:10px;'>Current Weather at Location</h3><p><strong style='color:blue;'>Temperature: </strong>" + temp + "<br /><strong style='color:blue;'>UV Index: </strong>" + uvi + "<br /><strong style='color:blue;'>Visibility: </strong>" + vis;
+//     weatherEl.appendChild(textData);
+//     var imgEl = document.createElement("div");
+//     imgEl.innerHTML = "<img src='" + iconUrl + "' />";
+//     weatherEl.appendChild(imgEl);
+//     upcomingEl.appendChild(weatherEl);
+//   })
+// });
