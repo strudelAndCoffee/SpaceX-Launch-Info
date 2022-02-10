@@ -232,9 +232,9 @@ var displayLaunchSiteLinks = function (obj) {
 async function  getWeatherData(lon, lat) {
 
   // need to chain api calls in order to get weather png
-  const response1 = await fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ String(lat) + "&lon="+ String(lon) + "&appid=35ba749d4db4fe6cbb94fc8036fea775");
+  const response1 = await fetch("https://api.openweathermap.org/data/2.5/weather?lat="+ String(lat) + "&lon="+ String(lon) + "&appid=35ba749d4db4fe6cbb94fc8036fea775");
   const data1 = await response1.json();
-  const response2 = await fetch("http://api.weatherapi.com/v1/current.json?key=baafdcc671a24961b5e201219220102&q="+ data1.name + "&aqi=no");
+  const response2 = await fetch("https://api.weatherapi.com/v1/current.json?key=baafdcc671a24961b5e201219220102&q="+ data1.name + "&aqi=no");
   const data2 = await response2.json();
   return data2
 }
