@@ -9,11 +9,13 @@ var nextLaunchData = function () {
     if (response.ok) {
       response.json().then(function (data) {
 
+        console.log(data);
+
         var index = 0;
 
-        if (data[index].launch_library_id) {
-          index++;
-        }
+        // if (data[index].launch_library_id) {
+        //   index++;
+        // }
 
         displayNextLaunch(data[index]);
       });
