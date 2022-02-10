@@ -241,5 +241,5 @@ async function  getWeatherData(lon, lat) {
   return data2
 }
 
-launchSitesData();
-nextLaunchData();
+// launchSitesData();
+// nextLaunchData();
