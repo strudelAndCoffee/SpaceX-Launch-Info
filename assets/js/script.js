@@ -21,40 +21,61 @@ var nextLaunchData = function () {
 
 var displayNextLaunch = function (data) {
 
-  var date = DateTime.fromISO(data.date_local).toLocaleString(DateTime.DATETIME_SHORT);
-  var siteId = data.launchpad;
-  var siteUrl = "https://api.spacexdata.com/v4/launchpads/" + siteId;
-  var payloadUrl = "https://api.spacexdata.com/v4/payloads/" + data.payloads[0];
-  var flight = data.flight_number;
-  var reddit = data.links.reddit.campaign;
-  var siteImg = "No Image Available";
-  for (var i = 0; i < launchSitesArr.length; i++) {
+  let date = DateTime.fromISO(data.date_local).toLocaleString(DateTime.DATETIME_SHORT);
+  let siteId = data.launchpad;
+  let siteUrl = "https://api.spacexdata.com/v4/launchpads/" + siteId;
+  let payloadUrl = "https://api.spacexdata.com/v4/payloads/" + data.payloads[0];
+  let flight = data.flight_number;
+  let reddit = data.links.reddit.campaign;
+  let siteImg = "No Image Available";
+  for (let i = 0; i < launchSitesArr.length; i++) {
     if (launchSitesArr[i].id != siteId) {
       siteImg = siteImg;
     } else {
       siteImg = launchSitesArr[i].img;
     }
   };
-  var crew = "";
+  let crew = "";
   if (data.crew.length == 0) {
     crew = "N/A";
   } else if (data.crew.length > 0) {
-    for (var i = 0; i < data.crew.length; i++) {
+    for (let i = 0; i < data.crew.length; i++) {
       crew = data.crew.join(", ");
     }
   };
 
+  // payload data
   fetch(payloadUrl).then(function (response) {
     response.json().then(function (payloadData) {
       let payload = payloadData.name;
     });
   });
 
+  // launch site data
   fetch(siteUrl).then(function (response) {
     response.json().then(function (launchpadData) {
       let launchpad = launchpadData.full_name;
+      let lat = launchpadData.latitude;
+      let lon = launchpadData.longitude;
+
+      // weather data
+      getWeatherData(lon, lat).then(weatherData => {
+        console.log(weatherData)
+      });
     });
   });
+
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+  
 };
 
 var launchSitesData = function () {
@@ -70,10 +91,9 @@ var launchSitesData = function () {
           loc: data[1].region,
           lat: data[1].latitude,
           lon: data[1].longitude,
-          link: "./capeCanaveral.html"
         }
         launchSitesArr.push(linkObj1);
-        displayLaunchSiteLinks(linkObj1);
+        displayLaunchSites(linkObj1);
 
         // Kennedy Space Center Historic Launch Complex 39A
         var linkObj5 = {
@@ -83,10 +103,9 @@ var launchSitesData = function () {
           loc: data[5].region,
           lat: data[5].latitude,
           lon: data[5].longitude,
-          link: "./kennedy.html"
         }
         launchSitesArr.push(linkObj5);
-        displayLaunchSiteLinks(linkObj5);
+        displayLaunchSites(linkObj5);
 
         // Vandenberg Space Force Base Space Launch Complex 4E
         var linkObj4 = {
@@ -96,10 +115,9 @@ var launchSitesData = function () {
           loc: data[4].region,
           lat: data[4].latitude,
           lon: data[4].longitude,
-          link: "./vandenberg.html"
         }
         launchSitesArr.push(linkObj4);
-        displayLaunchSiteLinks(linkObj4);
+        displayLaunchSites(linkObj4);
 
         // SpaceX South Texas Launch Site (under construction)
         var linkObj2 = {
@@ -109,46 +127,19 @@ var launchSitesData = function () {
           loc: data[2].region,
           lat: data[2].latitude,
           lon: data[2].longitude,
-          link: "./southTexas.html"
         }
         launchSitesArr.push(linkObj2);
-        displayLaunchSiteLinks(linkObj2);
+        displayLaunchSites(linkObj2);
       });
     }
     else {
       var error = document.createElement("h3");
       error.textContent = "Could not load data. Please try again later.";
-      launchSitesEl.appendChild(error);
     }
   });
 };
 
-var displayLaunchSiteLinks = function (obj) {
-
-  var launchSiteCard = document.createElement("div");
-  // to set class for Bulma styling
-  // launchSiteCar.className = "";
-  launchSiteCard.setAttribute("id", obj.link);
-  launchSiteCard.setAttribute("style", "border:1px solid blue; text-align:center; width:45vw;");
-
-  var locationEl = document.createElement("h2");
-  locationEl.setAttribute("style", "color:blue;");
-  locationEl.textContent = obj.loc;
-  launchSiteCard.appendChild(locationEl);
-
-  var nameEl = document.createElement("h2");
-  nameEl.textContent = obj.name;
-  launchSiteCard.appendChild(nameEl);
-
-  var imageLinkEl = document.createElement("a");
-  // these style settings are temporary
-  imageLinkEl.innerHTML =
-    "<img src='" + obj.img + "' style='width:75%; border-radius:4px;' />";
-  launchSiteCard.appendChild(imageLinkEl);
-
-  // var coordinatesEl = document.createElement("p");
-  // coordinatesEl.innerHTML = "Latitude: " + obj.lat + "<br />" + "Longitude: " + obj.lon;
-  // launchSiteCard.appendChild(coordinatesEl);
+var displayLaunchSites = function (obj) {
 
   // weather info
   var weatherCard = document.createElement("div");
@@ -164,17 +155,10 @@ var displayLaunchSiteLinks = function (obj) {
     cityNameEL.textContent = weatherData.location.name;
     imageEL.src= "https:"+weatherData.current.condition.icon
 
-
-  
     weatherCard.appendChild(cityNameEL);
     weatherCard.appendChild(tempEL);
     weatherCard.appendChild(imageEL)
-
-
   });
-
-  launchSiteCard.appendChild(weatherCard);
-  launchSitesEl.appendChild(launchSiteCard);
 };
 
 // weather function
@@ -186,7 +170,7 @@ async function  getWeatherData(lon, lat) {
   const response2 = await fetch("https://api.weatherapi.com/v1/current.json?key=baafdcc671a24961b5e201219220102&q="+ data1.name + "&aqi=no");
   const data2 = await response2.json();
   return data2
-}
+};
 
 launchSitesData();
 nextLaunchData();
