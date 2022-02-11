@@ -80,36 +80,39 @@ var launchSitesData = function () {
 
         for (let i = 1; i < 6; i++) {
 
-          if (i === 2) {
-            var siteObj = {
-              index: i,
-              id: data[i].id,
-              name: data[i].full_name + " (under construction...)",
-              img: data[i].images.large[0],
-              loc: data[i].region,
-              lat: data[i].latitude,
-              lon: data[i].longitude,
-              details: data[i].details,
-              launches: data[i].launches
-            }
-            siteObjArr.push(siteObj);
-            displayLaunchSites(siteObj);
+          var siteObj = {
+            index: i,
+            id: data[i].id,
+            name: data[i].full_name,
+            img: data[i].images.large[0],
+            loc: data[i].region,
+            lat: data[i].latitude,
+            lon: data[i].longitude,
+            details: data[i].details,
+            launches: data[i].launches
           }
-          else if (i !== 3) {
-            var siteObj = {
-              index: i,
-              id: data[i].id,
-              name: data[i].full_name,
-              img: data[i].images.large[0],
-              loc: data[i].region,
-              lat: data[i].latitude,
-              lon: data[i].longitude,
-              details: data[i].details,
-              launches: data[i].launches
-            }
-            siteObjArr.push(siteObj);
-            displayLaunchSites(siteObj);
-          }
+
+          switch(i) {
+            case 1:
+              siteObjArr.push(siteObj);
+              displayLaunchSites(siteObj);
+              break;
+            case 2:
+              siteObj.name = data[i].full_name + " (under construction)";
+              siteObjArr.push(siteObj);
+              displayLaunchSites(siteObj);
+              break;
+            case 3:
+              break;
+            case 4:
+              siteObjArr.push(siteObj);
+              displayLaunchSites(siteObj);
+              break;
+            case 5:
+              siteObjArr.push(siteObj);
+              displayLaunchSites(siteObj);
+              break;
+          };
         };
       });
     };
@@ -117,6 +120,25 @@ var launchSitesData = function () {
 };
 
 var displayLaunchSites = function (obj) {
+
+  console.log(obj);
+
+  let cardId = obj.index;
+  var infoDisplay = document.querySelector("#site-info-" + cardId);
+  // var imgDisplay = document.querySelector("#site-img-" + cardId);
+  // var weatherDisplay = document.querySelector("#site-weather-" + cardId);
+  var infoEl = document.createElement("div");
+  var nameEl = document.createElement("h2");
+  nameEl.textContent = obj.name;
+  infoEl.appendChild(nameEl);
+  var regionEl = document.createElement("h3");
+  regionEl.textContent = obj.loc;
+  infoEl.appendChild(regionEl);
+  // var imgEl;
+  // var weatherEl;
+  infoDisplay.appendChild(infoEl);
+  // imgDisplay.appendChild(imgEl);
+  // weatherDisplay.appendChild(weatherEl);
 
   // weather info
   // var weatherCard = document.createElement("div");
