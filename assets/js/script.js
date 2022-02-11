@@ -121,8 +121,6 @@ var launchSitesData = function () {
 
 var displayLaunchSites = function (obj) {
 
-  console.log(obj);
-
   var cardId = obj.index;
   var infoEl = document.querySelector("#site-info-" + cardId);
   var imgEl = document.querySelector("#site-img-" + cardId);
@@ -137,6 +135,7 @@ var displayLaunchSites = function (obj) {
 
     infoEl.querySelector(".city-state").textContent = weatherData.location.name + ", " + obj.loc;
     weatherEl.querySelector(".temp").textContent = weatherData.current.temp_f + " °F";
+    weatherEl.querySelector(".vis").textContent = weatherData.current.vis_miles + " miles";
     weatherEl.querySelector("img").src = "https:" + weatherData.current.condition.icon;
   });
 };
@@ -154,5 +153,3 @@ async function  getWeatherData(lon, lat) {
 
 launchSitesData();
 nextLaunchData();
-
-console.log(siteObjArr);
