@@ -8,7 +8,7 @@ var nextLaunchData = function () {
       response.json().then(function (data) {
 
         displayNextLaunch(data[0]);
-        // console.log(data);
+        console.log(data);
       });
 
     } else {
@@ -35,6 +35,18 @@ var displayNextLaunch = function (data) {
       crew = data.crew.join(", ");
     }
   };
+  let details = "";
+  if (!data.details) {
+    details = "N/A";
+  } else {
+    details = data.details;
+  };
+  let webcast = "";
+  if (!data.links.webcast) {
+    webcast = "N/A";
+  } else {
+    webcast = data.links.webcast;
+  }
 
   // payload data
   fetch(payloadUrl).then(function (response) {
@@ -46,7 +58,6 @@ var displayNextLaunch = function (data) {
   // launch site data
   fetch(siteUrl).then(function (response) {
     response.json().then(function (siteData) {
-      console.log(siteData);
 
       let siteFullName = siteData.full_name;
       let siteRegion = siteData.region;
@@ -57,7 +68,6 @@ var displayNextLaunch = function (data) {
 
       // weather data
       getWeatherData(lon, lat).then(weatherData => {
-        console.log(weatherData)
         let siteCity = weatherData.location.name;
         let temp = weatherData.current.temp_f+" °F";
         let icon = weatherData.current.condition.icon;
