@@ -6,11 +6,8 @@ var nextLaunchData = function () {
 
     if (response.ok) {
       response.json().then(function (data) {
-
         displayNextLaunch(data[0]);
-        console.log(data);
       });
-
     } else {
       var error = document.createElement("h3");
       error.textContent = "Could not retrieve data. Please try again later.";
@@ -81,6 +78,8 @@ var launchSitesData = function () {
     if (response.ok) {
       response.json().then(function (data) {
 
+        console.log(data);
+
         // Cape Canaveral Space Force Station Space Launch Complex 40 info
         var linkObj1 = {
           id: data[1].id,
@@ -89,7 +88,8 @@ var launchSitesData = function () {
           loc: data[1].region,
           lat: data[1].latitude,
           lon: data[1].longitude,
-          details: data[1].details
+          details: data[1].details,
+          launches = data[1].launches
         }
         launchSitesArr.push(linkObj1);
         displayLaunchSites(linkObj1);
@@ -102,7 +102,8 @@ var launchSitesData = function () {
           loc: data[5].region,
           lat: data[5].latitude,
           lon: data[5].longitude,
-          details: data[5].details
+          details: data[5].details,
+          launches = data[5].launches
         }
         launchSitesArr.push(linkObj5);
         displayLaunchSites(linkObj5);
@@ -115,7 +116,8 @@ var launchSitesData = function () {
           loc: data[4].region,
           lat: data[4].latitude,
           lon: data[4].longitude,
-          details: data[4].details
+          details: data[4].details,
+          launches = data[4].launches
         }
         launchSitesArr.push(linkObj4);
         displayLaunchSites(linkObj4);
@@ -128,7 +130,8 @@ var launchSitesData = function () {
           loc: data[2].region,
           lat: data[2].latitude,
           lon: data[2].longitude,
-          details: data[2].details
+          details: data[2].details,
+          launches = data[2].launches
         }
         launchSitesArr.push(linkObj2);
         displayLaunchSites(linkObj2);
