@@ -1,17 +1,12 @@
 const DateTime = luxon.DateTime;
-var launchSitesArr = [];
+var siteObjArr = [];
 
 var nextLaunchData = function () {
   fetch("https://api.spacexdata.com/v4/launches/upcoming").then(function (response) {
-
     if (response.ok) {
       response.json().then(function (data) {
         displayNextLaunch(data[0]);
       });
-    } else {
-      var error = document.createElement("h3");
-      error.textContent = "Could not retrieve data. Please try again later.";
-      upcomingEl.appendChild(error);
     }
   });
 };
@@ -78,69 +73,41 @@ var launchSitesData = function () {
     if (response.ok) {
       response.json().then(function (data) {
 
-        console.log(data);
+        for (let i = 1; i < 6; i++) {
 
-        // Cape Canaveral Space Force Station Space Launch Complex 40 info
-        var linkObj1 = {
-          id: data[1].id,
-          name: data[1].full_name,
-          img: data[1].images.large[0],
-          loc: data[1].region,
-          lat: data[1].latitude,
-          lon: data[1].longitude,
-          details: data[1].details,
-          launches = data[1].launches
-        }
-        launchSitesArr.push(linkObj1);
-        displayLaunchSites(linkObj1);
-
-        // Kennedy Space Center Historic Launch Complex 39A
-        var linkObj5 = {
-          id: data[5].id,
-          name: data[5].full_name,
-          img: data[5].images.large[0],
-          loc: data[5].region,
-          lat: data[5].latitude,
-          lon: data[5].longitude,
-          details: data[5].details,
-          launches = data[5].launches
-        }
-        launchSitesArr.push(linkObj5);
-        displayLaunchSites(linkObj5);
-
-        // Vandenberg Space Force Base Space Launch Complex 4E
-        var linkObj4 = {
-          id: data[4].id,
-          name: data[4].full_name,
-          img: data[4].images.large[0],
-          loc: data[4].region,
-          lat: data[4].latitude,
-          lon: data[4].longitude,
-          details: data[4].details,
-          launches = data[4].launches
-        }
-        launchSitesArr.push(linkObj4);
-        displayLaunchSites(linkObj4);
-
-        // SpaceX South Texas Launch Site (under construction)
-        var linkObj2 = {
-          id: data[2].id,
-          name: data[2].full_name + " (under construction...)",
-          img: data[2].images.large[0],
-          loc: data[2].region,
-          lat: data[2].latitude,
-          lon: data[2].longitude,
-          details: data[2].details,
-          launches = data[2].launches
-        }
-        launchSitesArr.push(linkObj2);
-        displayLaunchSites(linkObj2);
+          if (i === 2) {
+            var siteObj = {
+              index: i,
+              id: data[i].id,
+              name: data[i].full_name + " (under construction...)",
+              img: data[i].images.large[0],
+              loc: data[i].region,
+              lat: data[i].latitude,
+              lon: data[i].longitude,
+              details: data[i].details,
+              launches: data[i].launches
+            }
+            siteObjArr.push(siteObj);
+            displayLaunchSites(siteObj);
+          }
+          else if (i !== 3) {
+            var siteObj = {
+              index: i,
+              id: data[i].id,
+              name: data[i].full_name,
+              img: data[i].images.large[0],
+              loc: data[i].region,
+              lat: data[i].latitude,
+              lon: data[i].longitude,
+              details: data[i].details,
+              launches: data[i].launches
+            }
+            siteObjArr.push(siteObj);
+            displayLaunchSites(siteObj);
+          }
+        };
       });
-    }
-    else {
-      var error = document.createElement("h3");
-      error.textContent = "Could not load data. Please try again later.";
-    }
+    };
   });
 };
 
@@ -179,3 +146,5 @@ async function  getWeatherData(lon, lat) {
 
 launchSitesData();
 nextLaunchData();
+
+console.log(siteObjArr);
