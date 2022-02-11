@@ -27,14 +27,6 @@ var displayNextLaunch = function (data) {
   let payloadUrl = "https://api.spacexdata.com/v4/payloads/" + data.payloads[0];
   let flight = data.flight_number;
   let reddit = data.links.reddit.campaign;
-  let siteImg = "No Image Available";
-  for (let i = 0; i < launchSitesArr.length; i++) {
-    if (launchSitesArr[i].id != siteId) {
-      siteImg = siteImg;
-    } else {
-      siteImg = launchSitesArr[i].img;
-    }
-  };
   let crew = "";
   if (data.crew.length == 0) {
     crew = "N/A";
@@ -53,29 +45,23 @@ var displayNextLaunch = function (data) {
 
   // launch site data
   fetch(siteUrl).then(function (response) {
-    response.json().then(function (launchpadData) {
-      let launchpad = launchpadData.full_name;
-      let lat = launchpadData.latitude;
-      let lon = launchpadData.longitude;
+    response.json().then(function (siteData) {
+      console.log(siteData);
+
+      let siteFullName = siteData.full_name;
+      let siteRegion = siteData.region;
+      let siteImage = siteData.images.large[0];
+      let siteDetails = siteData.details;
+      let lat = siteData.latitude;
+      let lon = siteData.longitude;
 
       // weather data
       getWeatherData(lon, lat).then(weatherData => {
         console.log(weatherData)
+        let siteCity = weatherData.location.name;
       });
     });
   });
-
-  
-  
-
-  
-  
-  
-
-  
-  
-  
-  
 };
 
 var launchSitesData = function () {
@@ -91,6 +77,7 @@ var launchSitesData = function () {
           loc: data[1].region,
           lat: data[1].latitude,
           lon: data[1].longitude,
+          details: data[1].details
         }
         launchSitesArr.push(linkObj1);
         displayLaunchSites(linkObj1);
@@ -103,6 +90,7 @@ var launchSitesData = function () {
           loc: data[5].region,
           lat: data[5].latitude,
           lon: data[5].longitude,
+          details: data[5].details
         }
         launchSitesArr.push(linkObj5);
         displayLaunchSites(linkObj5);
@@ -115,6 +103,7 @@ var launchSitesData = function () {
           loc: data[4].region,
           lat: data[4].latitude,
           lon: data[4].longitude,
+          details: data[4].details
         }
         launchSitesArr.push(linkObj4);
         displayLaunchSites(linkObj4);
@@ -127,6 +116,7 @@ var launchSitesData = function () {
           loc: data[2].region,
           lat: data[2].latitude,
           lon: data[2].longitude,
+          details: data[2].details
         }
         launchSitesArr.push(linkObj2);
         displayLaunchSites(linkObj2);
@@ -142,23 +132,23 @@ var launchSitesData = function () {
 var displayLaunchSites = function (obj) {
 
   // weather info
-  var weatherCard = document.createElement("div");
-  var tempEL = document.createElement("h2"); 
-  var cityNameEL = document.createElement("h2"); 
-  var imageEL=document.createElement("img")
+  // var weatherCard = document.createElement("div");
+  // var tempEL = document.createElement("h2"); 
+  // var cityNameEL = document.createElement("h2"); 
+  // var imageEL=document.createElement("img")
 
   
-  getWeatherData(obj.lon, obj.lat).then(weatherData => {
-    console.log(weatherData)
+  // getWeatherData(obj.lon, obj.lat).then(weatherData => {
+  //   console.log(weatherData)
 
-    tempEL.textContent= weatherData.current.temp_f+" °F";
-    cityNameEL.textContent = weatherData.location.name;
-    imageEL.src= "https:"+weatherData.current.condition.icon
+  //   tempEL.textContent= weatherData.current.temp_f+" °F";
+  //   cityNameEL.textContent = weatherData.location.name;
+  //   imageEL.src= "https:"+weatherData.current.condition.icon
 
-    weatherCard.appendChild(cityNameEL);
-    weatherCard.appendChild(tempEL);
-    weatherCard.appendChild(imageEL)
-  });
+  //   weatherCard.appendChild(cityNameEL);
+  //   weatherCard.appendChild(tempEL);
+  //   weatherCard.appendChild(imageEL)
+  // });
 };
 
 // weather function
