@@ -59,6 +59,8 @@ var displayNextLaunch = function (data) {
       getWeatherData(lon, lat).then(weatherData => {
         console.log(weatherData)
         let siteCity = weatherData.location.name;
+        let temp = weatherData.current.temp_f+" °F";
+        let icon = weatherData.current.condition.icon;
       });
     });
   });
