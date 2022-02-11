@@ -13,12 +13,14 @@ var nextLaunchData = function () {
 
 var displayNextLaunch = function (data) {
 
+  // launch date
   let date = DateTime.fromISO(data.date_local).toLocaleString(DateTime.DATETIME_SHORT);
-  let siteId = data.launchpad;
-  let siteUrl = "https://api.spacexdata.com/v4/launchpads/" + siteId;
-  let payloadUrl = "https://api.spacexdata.com/v4/payloads/" + data.payloads[0];
+  // fight number
   let flight = data.flight_number;
+  // launch reddit description/discussion
   let reddit = data.links.reddit.campaign;
+
+  // optional data
   let crew = "";
   if (data.crew.length == 0) {
     crew = "N/A";
@@ -41,6 +43,7 @@ var displayNextLaunch = function (data) {
   }
 
   // payload data
+  let payloadUrl = "https://api.spacexdata.com/v4/payloads/" + data.payloads[0];
   fetch(payloadUrl).then(function (response) {
     response.json().then(function (payloadData) {
       let payload = payloadData.name;
@@ -48,6 +51,8 @@ var displayNextLaunch = function (data) {
   });
 
   // launch site data
+  let siteId = data.launchpad;
+  let siteUrl = "https://api.spacexdata.com/v4/launchpads/" + siteId;
   fetch(siteUrl).then(function (response) {
     response.json().then(function (siteData) {
 
