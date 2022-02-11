@@ -123,41 +123,22 @@ var displayLaunchSites = function (obj) {
 
   console.log(obj);
 
-  let cardId = obj.index;
-  var infoDisplay = document.querySelector("#site-info-" + cardId);
-  // var imgDisplay = document.querySelector("#site-img-" + cardId);
-  // var weatherDisplay = document.querySelector("#site-weather-" + cardId);
-  var infoEl = document.createElement("div");
-  var nameEl = document.createElement("h2");
-  nameEl.textContent = obj.name;
-  infoEl.appendChild(nameEl);
-  var regionEl = document.createElement("h3");
-  regionEl.textContent = obj.loc;
-  infoEl.appendChild(regionEl);
-  // var imgEl;
-  // var weatherEl;
-  infoDisplay.appendChild(infoEl);
-  // imgDisplay.appendChild(imgEl);
-  // weatherDisplay.appendChild(weatherEl);
+  var cardId = obj.index;
+  var infoEl = document.querySelector("#site-info-" + cardId);
+  var imgEl = document.querySelector("#site-img-" + cardId);
+  var weatherEl = document.querySelector("#site-weather-" + cardId);
 
-  // weather info
-  // var weatherCard = document.createElement("div");
-  // var tempEL = document.createElement("h2"); 
-  // var cityNameEL = document.createElement("h2"); 
-  // var imageEL=document.createElement("img")
+  infoEl.querySelector(".name").textContent = obj.name;
+  imgEl.querySelector("img").src = obj.img;
 
-  
-  // getWeatherData(obj.lon, obj.lat).then(weatherData => {
-  //   console.log(weatherData)
+  // weather and city name
+  getWeatherData(obj.lon, obj.lat).then(weatherData => {
+    console.log(weatherData);
 
-  //   tempEL.textContent= weatherData.current.temp_f+" °F";
-  //   cityNameEL.textContent = weatherData.location.name;
-  //   imageEL.src= "https:"+weatherData.current.condition.icon
-
-  //   weatherCard.appendChild(cityNameEL);
-  //   weatherCard.appendChild(tempEL);
-  //   weatherCard.appendChild(imageEL)
-  // });
+    infoEl.querySelector(".city-state").textContent = weatherData.location.name + ", " + obj.loc;
+    weatherEl.querySelector(".temp").textContent = weatherData.current.temp_f + " °F";
+    weatherEl.querySelector("img").src = "https:" + weatherData.current.condition.icon;
+  });
 };
 
 // weather function
