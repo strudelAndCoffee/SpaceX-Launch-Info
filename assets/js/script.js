@@ -1,3 +1,4 @@
+const DateTime = luxon.DateTime;
 var upcomingEl = document.querySelector("#upcoming");
 var launchSitesEl = document.querySelector("#launch-sites");
 
@@ -34,6 +35,9 @@ var displayNextLaunch = function (data) {
   var flight = data.flight_number;
   var reddit = data.links.reddit.campaign;
   var crew = "";
+
+  var time = DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_SHORT);
+  console.log(time);
 
   if (data.crew.length == 0) {
     crew = "N/A";
@@ -241,5 +245,5 @@ async function  getWeatherData(lon, lat) {
   return data2
 }
 
-// launchSitesData();
-// nextLaunchData();
+launchSitesData();
+nextLaunchData();
