@@ -13,40 +13,47 @@ var nextLaunchData = function () {
 
 var displayNextLaunch = function (data) {
 
+  // display elemnets
+  let infoEl = document.querySelector("#next-info");
+  let imgEl = document.querySelector("#next-img");
+  let weatherEl = document.querySelector("#next-weather");
+
   // launch date
-  let date = DateTime.fromISO(data.date_local).toLocaleString(DateTime.DATETIME_SHORT);
+  infoEl.querySelector(".date").textContent = DateTime.fromISO(data.date_local).toLocaleString(DateTime.DATETIME_SHORT);
   // fight number
-  let flight = data.flight_number;
-  // launch reddit description/discussion
-  let reddit = data.links.reddit.campaign;
+  infoEl.querySelector(".flight").textContent = data.flight_number;
+  // reddit link
+  infoEl.querySelector("a").href = data.links.reddit.campaign;
 
   // optional data
-  let crew = "";
+  // crew members
   if (data.crew.length == 0) {
-    crew = "N/A";
+    infoEl.querySelector(".crew").textContent = "N/A";
   } else if (data.crew.length > 0) {
     for (let i = 0; i < data.crew.length; i++) {
-      crew = data.crew.join(", ");
+      var crew = data.crew.join(", ");
     }
+    infoEl.querySelector(".crew").textContent = crew;
   };
-  let details = "";
+  // mission details
   if (!data.details) {
-    details = "N/A";
+    infoEl.querySelector(".details").textContent = "N/A";
   } else {
-    details = data.details;
+    infoEl.querySelector(".details").textContent = data.details;
   };
-  let webcast = "";
+  // webcast
   if (!data.links.webcast) {
-    webcast = "N/A";
+    infoEl.querySelector(".webcast").textContent = "N/A";
   } else {
-    webcast = data.links.webcast;
+    var link = data.links.webcast;
+    infoEl.querySelector(".webcast").innerHTML = "<a href='" + link + "' target='_blank'>YouTube</a>";
   }
 
   // payload data
   let payloadUrl = "https://api.spacexdata.com/v4/payloads/" + data.payloads[0];
   fetch(payloadUrl).then(function (response) {
     response.json().then(function (payloadData) {
-      let payload = payloadData.name;
+      infoEl.querySelector(".payload").textContent = payloadData.name;
     });
   });
 
@@ -56,18 +63,20 @@ var displayNextLaunch = function (data) {
   fetch(siteUrl).then(function (response) {
     response.json().then(function (siteData) {
 
-      let siteFullName = siteData.full_name;
       let siteRegion = siteData.region;
-      let siteImage = siteData.images.large[0];
-      let siteDetails = siteData.details;
       let lat = siteData.latitude;
       let lon = siteData.longitude;
 
       // weather data
       getWeatherData(lon, lat).then(weatherData => {
         let siteCity = weatherData.location.name;
-        let temp = weatherData.current.temp_f+" °F";
-        let icon = weatherData.current.condition.icon;
+        weatherEl.querySelector(".temp").textContent = weatherData.current.temp_f + " °F";
+        weatherEl.querySelector(".vis").textContent = weatherData.current.vis_miles + " miles";
+        weatherEl.querySelector("img").src = "https:" + weatherData.current.condition.icon;
+
+        infoEl.querySelector(".city-state").textContent = siteCity + ", " + siteRegion;
+        infoEl.querySelector(".name").textContent = siteData.full_name;
+        imgEl.querySelector("img").src = siteData.images.large[0];
       });
     });
   });
@@ -121,12 +130,13 @@ var launchSitesData = function () {
 
 var displayLaunchSites = function (obj) {
 
-  var cardId = obj.index;
-  var infoEl = document.querySelector("#site-info-" + cardId);
-  var imgEl = document.querySelector("#site-img-" + cardId);
-  var weatherEl = document.querySelector("#site-weather-" + cardId);
+  let cardId = obj.index;
+  let infoEl = document.querySelector("#site-info-" + cardId);
+  let imgEl = document.querySelector("#site-img-" + cardId);
+  let weatherEl = document.querySelector("#site-weather-" + cardId);
 
   infoEl.querySelector(".name").textContent = obj.name;
+  infoEl.querySelector(".details").textContent = obj.details;
   imgEl.querySelector("img").src = obj.img;
 
   // weather and city name
