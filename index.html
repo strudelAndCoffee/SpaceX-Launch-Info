@@ -1,127 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <title>Group Project: SpaceX launch info</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="./assets/css/styles.css">
-  <title>Group Project: SpaceX launch info</title>
-</head>
+  <body>
+    <header>
+      <h1>
+        <a href="./index.html">SpaceX Launch Info</a>
+      </h1>
+    </header>
 
-<body>
-  <header>
-    <h1>
-      <a href="./index.html">SpaceX Launch Info</a>
-    </h1>
-  </header>
-  
-  <main>
-    <!-- <div class="hero-image">
-    </div> -->
-    <section class="next-launch">
-      <div id="next-info">
-        <h2>Next Launch:</h2>
-        <h3>Where: <span class="city-state"></span></h3>
-        <h3>When: <span class="date"></span></h3>
-        <h3>Description:</h3>
-        <p>Launch Site: <span class="name"></span></p>
-        <p>Flight #: <span class="flight"></span></p>
-        <p>Mission Payload: <span class="payload"></span></p>
-        <p>Mission Details: <span class="details"></span></p>
-        <p>Crew Members: <span class="crew"></span></p>
-        <p>Webcast: <span class="webcast"></span></p>
-        <a href="" target="_blank">Read more on current mission here (reddit.com)</a>
-      </div>
-      <div id="next-img">
-        <img src="" style="width:50%;" />
-      </div>
-      <div id="next-weather">
-        <h3>Current Conditions:</h3>
-        <p>Temp: <span class="temp"></span></p>
-        <p>Visibility: <span class="vis"></span></p>
-        <img src="" />
-      </div>
-    </section>
+    <main>
+      <!-- next launch section -->
+      <section class="next-launch columns is-vcentered">
+        <div id="next-info" class="column is-half">
+          <div class="block">
+            <h2>Next Launch</h2>
+            <h3>Where: <span class="city-state"></span></h3>
+            <h3>When: <span class="date"></span></h3>
+          </div>
 
-    <section class="launch-sites">
-      <article class="site-card">
-        <div id="site-info-1">
-          <h2 class="city-state"></h2>
-          <h3 class="name"></h3>
-          <p>Site Description: <span class="details"></span></p>
+          <div class="block">
+            <h3>Description:</h3>
+            <p>Launch Site: <span class="name"></span></p>
+            <p>Flight #: <span class="flight"></span></p>
+            <p>Mission Payload: <span class="payload"></span></p>
+            <p>Mission Details: <span class="details"></span></p>
+            <p>Crew Members: <span class="crew"></span></p>
+            <p>Webcast: <span class="webcast"></span></p>
+            <a href="" target="_blank"
+              >Read more on current mission here (reddit.com)</a
+            >
+          </div>
+
+          <div class="blovk">
+            <div id="next-weather">
+              <h3>Current Conditions:</h3>
+              <p>Temp: <span class="temp"></span></p>
+              <p>Visibility: <span class="vis"></span></p>
+              <img src="" />
+            </div>
+          </div>
         </div>
-        <div id="site-img-1">
-          <img src="" style="width:30%;" />
-        </div>
-        <div id="site-weather-1">
-          <h3>Current Conditions:</h3>
-          <p>Temp: <span class="temp"></span></p>
-          <p>Visibility: <span class="vis"></span></p>
+
+        <div id="next-img" class="column is-half">
           <img src="" />
         </div>
-      </article>
+      </section>
 
-      <article class="site-card">
-        <div id="site-info-5">
-          <h2 class="city-state"></h2>
-          <h3 class="name"></h3>
-          <p>Site Description: <span class="details"></span></p>
-        </div>
-        <div id="site-img-5">
-          <img src="" style="width:30%;" />
-        </div>
-        <div id="site-weather-5">
-          <h3>Current Conditions:</h3>
-          <p>Temp: <span class="temp"></span></p>
-          <p>Visibility: <span class="vis"></span></p>
-          <img src="" />
-        </div>
-      </article>
+      <!-- launch sites section -->
+      <section class="launch-sites columns is-multiline">
+        <!-- site card -->
+        <article class="site-card column">
+          <div id="site-info-1">
+            <div class="block">
+              <h2 class="city-state"></h2>
+              <h3 class="name"></h3>
+              <button
+                class="js-modal-trigger button is-primary"
+                data-target="modal-site1"
+              >
+                View Description
+              </button>
+            </div>
+            <!-- Bulma modal code sourced from: https://bulma.io/documentation/components/modal/ -->
+            <div id="modal-site1" class="modal">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <span class="details"></span>
+              </div>
+              <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+          </div>
+          <div id="site-img-1">
+            <img src="" />
+          </div>
+          <div id="site-weather-1" class="block">
+            <h3>Current Conditions:</h3>
+            <p>Temp: <span class="temp"></span></p>
+            <p>Visibility: <span class="vis"></span></p>
+            <img src="" />
+          </div>
+        </article>
 
-      <article class="site-card">
-        <div id="site-info-4">
-          <h2 class="city-state"></h2>
-          <h3 class="name"></h3>
-          <p>Site Description: <span class="details"></span></p>
-        </div>
-        <div id="site-img-4">
-          <img src="" style="width:30%;" />
-        </div>
-        <div id="site-weather-4">
-          <h3>Current Conditions:</h3>
-          <p>Temp: <span class="temp"></span></p>
-          <p>Visibility: <span class="vis"></span></p>
-          <img src="" />
-        </div>
-      </article>
+        <!-- site card -->
+        <article class="site-card column">
+          <div id="site-info-5">
+            <div class="block">
+              <h2 class="city-state"></h2>
+              <h3 class="name"></h3>
+              <button
+                class="js-modal-trigger button is-primary"
+                data-target="modal-site2"
+              >
+                View Description
+              </button>
+            </div>
+            <!-- Bulma modal code sourced from: https://bulma.io/documentation/components/modal/ -->
+            <div id="modal-site2" class="modal">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <span class="details"></span>
+              </div>
+              <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+          </div>
+          <div id="site-img-5">
+            <img src="" />
+          </div>
+          <div id="site-weather-5" class="block">
+            <h3>Current Conditions:</h3>
+            <p>Temp: <span class="temp"></span></p>
+            <p>Visibility: <span class="vis"></span></p>
+            <img src="" />
+          </div>
+        </article>
 
-      <article class="site-card">
-        <div id="site-info-2">
-          <h2 class="city-state"></h2>
-          <h3 class="name"></h3>
-          <p>Site Description: <span class="details"></span></p>
-        </div>
-        <div id="site-img-2">
-          <img src="" style="width:30%;" />
-        </div>
-        <div id="site-weather-2">
-          <h3>Current Conditions:</h3>
-          <p>Temp: <span class="temp"></span></p>
-          <p>Visibility: <span class="vis"></span></p>
-          <img src="" />
-        </div>
-      </article>
-    </section>
+        <!-- site card -->
+        <article class="site-card column">
+          <div id="site-info-4">
+            <div class="block">
+              <h2 class="city-state"></h2>
+              <h3 class="name"></h3>
+              <button
+                class="js-modal-trigger button is-primary"
+                data-target="modal-site3"
+              >
+                View Description
+              </button>
+            </div>
+            <!-- Bulma modal code sourced from: https://bulma.io/documentation/components/modal/ -->
+            <div id="modal-site3" class="modal">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <span class="details"></span>
+              </div>
+              <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+          </div>
+          <div id="site-img-4">
+            <img src="" />
+          </div>
+          <div id="site-weather-4" class="block">
+            <h3>Current Conditions:</h3>
+            <p>Temp: <span class="temp"></span></p>
+            <p>Visibility: <span class="vis"></span></p>
+            <img src="" />
+          </div>
+        </article>
 
-    <!-- <form id="main-form">
-      <label class="address" for="address">Pick a starting point:</label>
-      <input type="address" id="address" placeholder="Address">
-    </form> -->
-  </main>
- 
-  
-  <script src="https://cdn.jsdelivr.net/npm/luxon@2.3.0/build/global/luxon.min.js"></script>
-  <script src="./assets/js/script.js"></script>
-</body>
+        <!-- site card -->
+        <article class="site-card column">
+          <div id="site-info-2">
+            <div class="block">
+              <h2 class="city-state"></h2>
+              <h3 class="name"></h3>
+              <button
+                class="js-modal-trigger button is-primary"
+                data-target="modal-site4"
+              >
+                View Description
+              </button>
+            </div>
+            <!-- Bulma modal code sourced from: https://bulma.io/documentation/components/modal/ -->
+            <div id="modal-site4" class="modal">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <span class="details"></span>
+              </div>
+              <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+          </div>
+          <div id="site-img-2">
+            <img src="" />
+          </div>
+          <div id="site-weather-2" class="block">
+            <h3>Current Conditions:</h3>
+            <p>Temp: <span class="temp"></span></p>
+            <p>Visibility: <span class="vis"></span></p>
+            <img src="" />
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.3.0/build/global/luxon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+  </body>
 </html>
