@@ -50,10 +50,6 @@ h4 {
 
 @media screen and (max-width: 768px) {
     body {
-        background-image: url("../img/space2.jpg");
         width: 100vw;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
     }
 }
