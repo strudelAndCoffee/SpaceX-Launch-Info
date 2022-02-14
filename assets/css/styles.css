@@ -1,3 +1,7 @@
+@import "bulma/sass/utilities/_all.sass";
+@import "bulma/sass/grid/columns.sass";
+@import "bulma/sass/components/modal.sass";
+
 * {
     margin: 0;
     padding: 0;
@@ -14,45 +18,4 @@ body {
     position: relative;
     z-index: -1;
     text-align: center;
-}
-
-h1 {
-    padding: 15px 30px;
-    font-weight: 500;
-    letter-spacing: 1px;
-}
-
-.hero-image {
-    /* height: 250px; */
-    width: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-
-div {
-    display: block;
-}
-
-main {
-    margin: 0 auto 75px;
-    
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.address {
-    font-size: 18px;
-    grid-column: auto;
-    padding-bottom: 10px;
-}
-
-#address {
-    padding: 10px 5px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: auto;
 }
