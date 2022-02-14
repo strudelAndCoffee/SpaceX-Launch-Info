@@ -15,8 +15,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    position: relative;
-    z-index: -1;
+    background-attachment: fixed;
     text-align: center;
 }
 
@@ -25,7 +24,7 @@ body {
 }
 
 .next-launch {
-    margin-bottom: 15%;
+    padding-bottom: 3%;
 }
 
 h1 {
