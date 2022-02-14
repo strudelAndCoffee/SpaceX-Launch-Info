@@ -12,6 +12,10 @@ https://strudelandcoffee.github.io/group-project/
 * SO THAT I can plan a trip to see the launch in person
 ```
 
+The following image demonstrates the application functionality:
+
+![SpaceX dashboard demo](./assets/img/screencap-demo.png)
+
 ### Credits
 
 Developed by:
