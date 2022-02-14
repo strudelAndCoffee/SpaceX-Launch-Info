@@ -14,7 +14,7 @@ https://strudelandcoffee.github.io/group-project/
 
 The following image demonstrates the application functionality:
 
-![SpaceX dashboard demo](./assets/img/screencap-demo.png)
+![SpaceX dashboard demo](https://github.com/strudelAndCoffee/group-project/blob/main/assets/img/demo-screencap.png)
 
 ### Credits
 
