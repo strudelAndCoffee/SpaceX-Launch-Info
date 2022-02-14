@@ -19,3 +19,32 @@ body {
     z-index: -1;
     text-align: center;
 }
+
+.title, .subtitle {
+    color: hsl(204, 86%, 53%);
+}
+
+.next-launch {
+    margin-bottom: 15%;
+}
+
+h1 {
+    padding-bottom: 15px;
+}
+
+h3, p {
+    color: hsl(217, 71%, 53%);
+}
+
+h4 {
+    margin-bottom: 12px;
+}
+
+.name {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.site-imgs {
+    width: 75%;
+}
