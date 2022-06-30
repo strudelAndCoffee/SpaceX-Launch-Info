@@ -2,7 +2,7 @@
 
 This application will help space enthusiasts and SpaceX fans find information on upcoming launches and launch sites for all SpaceX missions. It provides up-to-date location and weather data for those who wish to travel to these locations to watch a launch in person.
 
-https://strudelandcoffee.github.io/group-project/
+https://strudelandcoffee.github.io/SpaceX-Launch-Info/
 
 ## User Story
 
